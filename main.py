@@ -25,6 +25,7 @@ points = []
 
 points = rand_points(10)
 
+
 def draw_grid(l):
     GAMEWINDOW.fill(orange)
     a = 0
@@ -49,6 +50,7 @@ def draw_grid(l):
         pygame.draw.rect(
             GAMEWINDOW, red, (i[0]*16, abs((49 - i[1])*16), 16, 16))
 
+
 def draw_line(a, b, color):
 
     x1 = a[0]
@@ -68,6 +70,7 @@ def display_points(l):
         surf = obj.render(s, True, black)
         GAMEWINDOW.blit(surf, (i[0]*16 + 16, abs((49 - i[1])*16 + 16)))
 
+
 def points_with_distance(a, b, l1, l2, l3):
     draw_grid(points)
     display_points(points)
@@ -84,6 +87,7 @@ def points_with_distance(a, b, l1, l2, l3):
 
     sleep()
 
+
 def sleep():
     t_end = time.time() + 2
     while time.time() < t_end:
@@ -93,12 +97,15 @@ def sleep():
 
         pygame.display.update()
 
+
 def call_pygame(a, b, l1, l2, l3):
     points_with_distance(a, b, l1, l2, l3)
+
 
 def terminate():
     pygame.quit()
     sys.exit()
+
 
 draw_grid(points)
 display_points(points)
@@ -121,6 +128,7 @@ def bruteForce(points, n, mid):
             if (distance(points[i], points[j]) < mini):
                 mini = distance(points[i], points[j])
     return mini
+
 
 def stripClosest(points, n, prevMin, left, right):
 
@@ -174,6 +182,7 @@ def closestPair(x_sorted, y_sorted, n, midpoint):
 
     return stripClosest(strip, len(strip), d, strip_left, strip_right)
 
+
 if not len(points):
     terminate()
 
@@ -192,7 +201,3 @@ while 1:
     surf = obj1.render(s, True, black)
     GAMEWINDOW.blit(surf, (810, 100))
     sleep()
-
-
-
-

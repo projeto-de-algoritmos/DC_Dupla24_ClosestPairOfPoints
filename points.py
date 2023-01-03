@@ -8,8 +8,8 @@ def rand_points(n):
     y = 0
     points = []
     for i in range(n):
-        x = randint(0,50) 
-        y = randint(0,50) 
+        x = randint(0,48) 
+        y = randint(0,48) 
         points.append((x, y))
     return points
 
