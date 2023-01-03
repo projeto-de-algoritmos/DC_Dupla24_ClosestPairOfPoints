@@ -83,3 +83,22 @@ def points_with_distance(a, b, l1, l2, l3):
     draw_line([l2, 0], [l2, 50], purple)
 
     sleep()
+
+def sleep():
+    t_end = time.time() + 2
+    while time.time() < t_end:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+
+        pygame.display.update()
+
+def call_pygame(a, b, l1, l2, l3):
+    points_with_distance(a, b, l1, l2, l3)
+
+def terminate():
+    pygame.quit()
+    sys.exit()
+
+draw_grid(points)
+display_points(points)
