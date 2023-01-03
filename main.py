@@ -1,31 +1,45 @@
 import pygame
 import sys
-import random
 import time
-import os
 from pygame.locals import *
 from points import rand_points
 from distance import distance
 
 pygame.init()
 
+# definindo tamanho da janela da aplicação
 GAMEWINDOW = pygame.display.set_mode((1100, 800))
+
+# título da aplicação
 pygame.display.set_caption(
     'Par de Pontos mais próximos via Dividir e Conquistar.')
+
+# fonte utilizada na aplicação
 obj = pygame.font.Font('freesansbold.ttf', 35)
+
+
+# descrição RGB das cores utilizadas na aplicação
 
 black = (0, 0, 0)
 red = (255, 0, 0)
 grey = (169, 169, 169)
 orange = (255, 178, 102)
 purple = (153, 153, 255)
+white = (255, 255, 255)
 
 
+# inicialização do vetor de pontos utilizados na aplicação
 points = []
+
+#
+# Caso deseje alterar o número de pontos criados basta aumentar o valor que a função rand_points recebe.
 
 points = rand_points(10)
 
+print("\nVetor de Pontos:", points, "\n")
 
+
+# Método de criação da malha
 def draw_grid(l):
     GAMEWINDOW.fill(orange)
     a = 0
@@ -33,7 +47,7 @@ def draw_grid(l):
     c = 0
     d = 800
     for i in range(50):
-        pygame.draw.line(GAMEWINDOW, grey, (a, b), (c, d), 1)
+        pygame.draw.line(GAMEWINDOW, black, (a, b), (c, d), 1)
         a += 16
         c += 16
 
@@ -42,7 +56,7 @@ def draw_grid(l):
     c = 800
     d = 0
     for i in range(50):
-        pygame.draw.line(GAMEWINDOW, grey, (a, b), (c, d), 1)
+        pygame.draw.line(GAMEWINDOW, black, (a, b), (c, d), 1)
         b += 16
         d += 16
 
@@ -62,6 +76,8 @@ def draw_line(a, b, color):
     pygame.draw.line(GAMEWINDOW, color, (x1*16, y1*16), (x2*16, y2*16), 5)
 
 
+# Método para mostrar os pontos (xi, yi) na aplicação
+
 def display_points(l):
     obj = pygame.font.Font('freesansbold.ttf', 20)
 
@@ -70,13 +86,15 @@ def display_points(l):
         surf = obj.render(s, True, black)
         GAMEWINDOW.blit(surf, (i[0]*16 + 16, abs((49 - i[1])*16 + 16)))
 
+# verifica a distância euclidiana entre dois pontos
 
-def points_with_distance(a, b, l1, l2, l3):
+
+def points_with_distance(a, b, l1, l2):
     draw_grid(points)
     display_points(points)
     obj1 = pygame.font.Font('freesansbold.ttf', 20)
     s = 'D = ' + str(round(((a[0]-b[0])**2 + (a[1]-b[1])**2)**0.5, 2))
-    surf = obj1.render(s, True, red)
+    surf = obj1.render(s, True, white)
     dist_x_coor = (a[0]*16 + b[0]*16)//2
     dist_y_coor = (800 - a[1]*16 + 800 - b[1]*16)//2
     GAMEWINDOW.blit(surf, (dist_x_coor, dist_y_coor))
@@ -98,8 +116,8 @@ def sleep():
         pygame.display.update()
 
 
-def call_pygame(a, b, l1, l2, l3):
-    points_with_distance(a, b, l1, l2, l3)
+def call_pygame(a, b, l1, l2):
+    points_with_distance(a, b, l1, l2)
 
 
 def terminate():
@@ -111,11 +129,8 @@ draw_grid(points)
 display_points(points)
 
 
-############################################################################################################
-
-
-def call_pygame(a, b, l1, l2, l3):
-    points_with_distance(a, b, l1, l2, l3)
+def call_pygame(a, b, l1, l2):
+    points_with_distance(a, b, l1, l2)
 
 
 def bruteForce(points, n, mid):
@@ -123,7 +138,7 @@ def bruteForce(points, n, mid):
 
     for i in range(n-1):
         for j in range(i+1, n):
-            call_pygame(points[i], points[j], mid, -1, -1)
+            call_pygame(points[i], points[j], mid, -1)
 
             if (distance(points[i], points[j]) < mini):
                 mini = distance(points[i], points[j])
@@ -137,7 +152,7 @@ def stripClosest(points, n, prevMin, left, right):
         for j in range(i+1, n):
             if points[j][1] - points[i][1] > mini:
                 break
-            call_pygame(points[i], points[j], left, right, -1)
+            call_pygame(points[i], points[j], left, right)
 
             if (distance(points[i], points[j]) < mini):
                 mini = distance(points[i], points[j])
@@ -192,12 +207,12 @@ x_sorted = sorted(points)
 y_sorted = sorted(points, key=lambda x: x[1])
 
 minimum = closestPair(x_sorted, y_sorted, n, -1)
-print(minimum)
+print("Menor distância:", minimum)
 
 
 while 1:
     obj1 = pygame.font.Font('freesansbold.ttf', 20)
     s = 'Menor Distância = ' + str(round(minimum, 2))
-    surf = obj1.render(s, True, black)
+    surf = obj1.render(s, True, white)
     GAMEWINDOW.blit(surf, (810, 100))
     sleep()
