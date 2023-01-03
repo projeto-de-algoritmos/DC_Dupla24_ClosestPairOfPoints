@@ -102,3 +102,24 @@ def terminate():
 
 draw_grid(points)
 display_points(points)
+
+
+############################################################################################################
+
+
+def call_pygame(a, b, l1, l2, l3):
+    points_with_distance(a, b, l1, l2, l3)
+
+
+def bruteForce(points, n, mid):
+    mini = sys.maxsize
+
+    for i in range(n-1):
+        for j in range(i+1, n):
+            call_pygame(points[i], points[j], mid, -1, -1)
+
+            if (distance(points[i], points[j]) < mini):
+                mini = distance(points[i], points[j])
+    return mini
+
+
