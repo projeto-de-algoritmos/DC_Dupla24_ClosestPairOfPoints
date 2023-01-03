@@ -58,3 +58,28 @@ def draw_line(a, b, color):
     y1 = abs(50 - y1)
     y2 = abs(50 - y2)
     pygame.draw.line(GAMEWINDOW, color, (x1*16, y1*16), (x2*16, y2*16), 5)
+
+
+def display_points(l):
+    obj = pygame.font.Font('freesansbold.ttf', 20)
+
+    for i in l:
+        s = '(' + str(i[0]) + ',' + str(i[1]) + ')'
+        surf = obj.render(s, True, black)
+        GAMEWINDOW.blit(surf, (i[0]*16 + 16, abs((49 - i[1])*16 + 16)))
+
+def points_with_distance(a, b, l1, l2, l3):
+    draw_grid(points)
+    display_points(points)
+    obj1 = pygame.font.Font('freesansbold.ttf', 20)
+    s = 'D = ' + str(round(((a[0]-b[0])**2 + (a[1]-b[1])**2)**0.5, 2))
+    surf = obj1.render(s, True, red)
+    dist_x_coor = (a[0]*16 + b[0]*16)//2
+    dist_y_coor = (800 - a[1]*16 + 800 - b[1]*16)//2
+    GAMEWINDOW.blit(surf, (dist_x_coor, dist_y_coor))
+
+    draw_line(a, b, (0, 255, 0))
+    draw_line((l1, 0), (l1, 50), purple)
+    draw_line([l2, 0], [l2, 50], purple)
+
+    sleep()
