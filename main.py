@@ -122,4 +122,77 @@ def bruteForce(points, n, mid):
                 mini = distance(points[i], points[j])
     return mini
 
+def stripClosest(points, n, prevMin, left, right):
+
+    mini = prevMin
+    for i in range(n-1):
+        for j in range(i+1, n):
+            if points[j][1] - points[i][1] > mini:
+                break
+            call_pygame(points[i], points[j], left, right, -1)
+
+            if (distance(points[i], points[j]) < mini):
+                mini = distance(points[i], points[j])
+    return mini
+
+
+def closestPair(x_sorted, y_sorted, n, midpoint):
+    if n <= 3:
+        return bruteForce(x_sorted, n, midpoint)
+
+    middle = n//2
+    midpoint = x_sorted[middle]
+
+    draw_grid(points)
+    display_points(points)
+    draw_line((midpoint[0], 0), (midpoint[0], 50), purple)
+    sleep()
+
+    left_x = x_sorted[: middle]
+    right_x = x_sorted[middle:]
+
+    left_y = y_sorted[: middle]
+    right_y = y_sorted[middle:]
+
+    dl = closestPair(left_x, left_y, middle, midpoint[0])
+    dr = closestPair(right_x, right_y, n-middle, midpoint[0])
+
+    d = min(dl, dr)
+
+    strip = []
+    for i in range(n):
+        if abs(y_sorted[i][0] - midpoint[0]) < d:
+            strip.append(y_sorted[i])
+
+    strip_left = midpoint[0] - d
+    strip_right = midpoint[0] + d
+
+    if strip_left < 0:
+        strip_left = 0
+    if strip_right > 800:
+        strip_right = 800
+
+    return stripClosest(strip, len(strip), d, strip_left, strip_right)
+
+if not len(points):
+    terminate()
+
+
+n = len(points)
+x_sorted = sorted(points)
+y_sorted = sorted(points, key=lambda x: x[1])
+
+minimum = closestPair(x_sorted, y_sorted, n, -1)
+print(minimum)
+
+
+while 1:
+    obj1 = pygame.font.Font('freesansbold.ttf', 20)
+    s = 'Menor Distância = ' + str(round(minimum, 2))
+    surf = obj1.render(s, True, black)
+    GAMEWINDOW.blit(surf, (810, 100))
+    sleep()
+
+
+
 
