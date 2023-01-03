@@ -214,5 +214,5 @@ while 1:
     obj1 = pygame.font.Font('freesansbold.ttf', 20)
     s = 'Menor Distância = ' + str(round(minimum, 2))
     surf = obj1.render(s, True, white)
-    GAMEWINDOW.blit(surf, (810, 100))
+    GAMEWINDOW.blit(surf, (830, 400))
     sleep()
