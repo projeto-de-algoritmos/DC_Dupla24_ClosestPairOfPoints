@@ -10,7 +10,7 @@
 | 17/0150747  |  [Marcos Vinícius Rodrigues da Conceição](https://github.com/marcos-mv) |
 ## Video
 
-
+https://www.youtube.com/watch?v=4tZtZ8WYYX8
 
 ## Sobre
 A ideia do projeto é simulador usando pygame onde dado uma lista de pontos é aplicado o algoritmo para encontrar a menor distância entre dois pontos utilizando a técnica de dividir e conquistar.
